@@ -40,7 +40,7 @@
           <button class="secondary-btn" id="surpriseBtn">Подарок от ёлки ✨</button>
         </div>
         <div class="hero-stats">
-          <div><b>47</b><span>медиа-объекта</span></div>
+          <div><b>18</b><span>медиа-объектов</span></div>
           <div><b>6</b><span>настроений</span></div>
           <div><b>∞</b><span>вариантов вечера</span></div>
         </div>
@@ -101,7 +101,7 @@
       <div class="mood-intro">
         <div class="eyebrow">02 / УМНАЯ РЕКОМЕНДАЦИЯ</div>
         <h2>Какой у тебя сегодня вечер?</h2>
-        <p>Выбери настроение — алгоритм подберёт подходящие объекты из медиатеки.</p>
+        <p>Выбери настроение — алгоритм подберёт три подходящих объекта из медиатеки.</p>
       </div>
       <div class="moods">
         <button class="mood" data-mood="cozy"><span>☕</span><b>Тихий</b><small>плед · свечи</small></button>
@@ -158,10 +158,10 @@
     </footer>
   </main>
 
-  <div class="modal" id="mediaModal" aria-hidden="true">
+    <div class="modal" id="mediaModal" aria-hidden="true">
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card">
-      <button class="modal-close" data-close>×</button>
+      <button class="modal-close" data-close aria-label="Закрыть">×</button>
       <div id="modalVisual" class="modal-visual"></div>
       <div class="modal-body">
         <div class="modal-type" id="modalType"></div>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b17">
+  <title>Ёлка-медиатека — новогоднее медиа-пространство</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="snow" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Ёлка-медиатека">
+      <span class="brand-mark">✦</span>
+      <span>Ёлка<span>медиатека</span></span>
+    </a>
+    <nav>
+      <a href="#catalog">Медиатека</a>
+      <a href="#mood">Настроение</a>
+      <a href="#playlist">Плейлист</a>
+      <a href="#about">О проекте</a>
+    </nav>
+    <button class="ghost-btn" id="themeBtn" title="Переключить оформление">◐</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">МУЛЬТИМЕДИА • ТЕХНОЁЛКА 2026</div>
+        <h1>Не просто ёлка.<br><em>Целый мир</em> новогодних историй.</h1>
+        <p class="lead">
+          Интерактивная медиатека, в которой каждая игрушка открывает фильм,
+          музыку, книгу или традицию. Выбирай настроение — ёлка соберёт вечер за тебя.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#tree">Зажечь ёлку <span>→</span></a>
+          <button class="secondary-btn" id="surpriseBtn">Подарок от ёлки ✨</button>
+        </div>
+        <div class="hero-stats">
+          <div><b>47</b><span>медиа-объекта</span></div>
+          <div><b>6</b><span>настроений</span></div>
+          <div><b>∞</b><span>вариантов вечера</span></div>
+        </div>
+      </div>
+
+      <div class="hero-tree-wrap" id="tree">
+        <div class="halo"></div>
+        <div class="tree-glow"></div>
+        <div class="floating-sparkles" aria-hidden="true"><i>✦</i><i>·</i><i>✧</i><i>·</i><i>✦</i><i>⋆</i></div>
+        <div class="tree">
+          <!-- <div class="star"><span>✦</span></div> -->
+          <div class="star">
+            <i class="star-outer"></i>
+            <i class="star-inner"></i>
+            <i class="star-core"></i>
+          </div>
+          <div class="branch b1"></div>
+          <div class="branch b2"></div>
+          <div class="branch b3"></div>
+          <div class="branch b4"></div>
+          <div class="snow-cap s1"></div><div class="snow-cap s2"></div><div class="snow-cap s3"></div>
+          <div class="garland g1"></div><div class="garland g2"></div><div class="garland g3"></div>
+          <div class="trunk"></div>
+          <div class="tree-skirt"></div>
+          <div class="gifts">
+  <span><i class="bow"></i></span>
+  <span><i class="bow"></i></span>
+  <span><i class="bow"></i></span>
+</div>
+          <div id="ornaments" class="ornaments"></div>
+        </div>
+        <div class="tree-caption"><span class="live-dot"></span> Ёлка активна · нажми на игрушку</div>
+      </div>
+    </section>
+
+    <section class="section" id="catalog">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">01 / МЕДИАТЕКА</div>
+          <h2>Игрушки, которые умеют больше</h2>
+        </div>
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="search" placeholder="Найти фильм, музыку, книгу...">
+        </div>
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="all">Все</button>
+        <button class="filter" data-filter="music">Музыка</button>
+        <button class="filter" data-filter="film">Кино</button>
+        <button class="filter" data-filter="book">Книги</button>
+        <button class="filter" data-filter="tradition">Традиции</button>
+      </div>
+      <div class="media-grid" id="mediaGrid"></div>
+    </section>
+
+    <section class="mood-section" id="mood">
+      <div class="mood-intro">
+        <div class="eyebrow">02 / УМНАЯ РЕКОМЕНДАЦИЯ</div>
+        <h2>Какой у тебя сегодня вечер?</h2>
+        <p>Выбери настроение — алгоритм подберёт подходящие объекты из медиатеки.</p>
+      </div>
+      <div class="moods">
+        <button class="mood" data-mood="cozy"><span>☕</span><b>Тихий</b><small>плед · свечи</small></button>
+        <button class="mood" data-mood="party"><span>✦</span><b>Праздник</b><small>громче · ярче</small></button>
+        <button class="mood" data-mood="nostalgia"><span>⌁</span><b>Ностальгия</b><small>как в детстве</small></button>
+        <button class="mood" data-mood="magic"><span>☾</span><b>Сказка</b><small>волшебство</small></button>
+        <button class="mood" data-mood="family"><span>♡</span><b>Семья</b><small>вместе</small></button>
+        <button class="mood" data-mood="study"><span>✎</span><b>Познавательно</b><small>узнать новое</small></button>
+      </div>
+      <div id="recommendation" class="recommendation hidden"></div>
+    </section>
+
+    <section class="playlist-section" id="playlist">
+      <div class="playlist-copy">
+        <div class="eyebrow">03 / ПЛЕЙЛИСТ ВЕЧЕРА</div>
+        <h2>Собери свой Новый год</h2>
+        <p>Добавляй понравившиеся игрушки в личный список. Он сохраняется в браузере и доступен даже после перезагрузки страницы.</p>
+        <div class="playlist-actions">
+          <button class="primary-btn" id="playAll">▶ Запустить вечер</button>
+          <button class="secondary-btn" id="clearPlaylist">Очистить</button>
+        </div>
+        <div class="share-box">
+          <div>
+            <b>Режим компании</b>
+            <span>Сгенерируй код своего вечера и передай его друзьям.</span>
+          </div>
+          <button class="small-btn" id="shareBtn">Поделиться</button>
+        </div>
+      </div>
+      <div class="playlist-card">
+        <div class="playlist-top"><span>МОЙ ВЕЧЕР</span><span id="playlistCount">0 / 12</span></div>
+        <div id="playlistItems" class="playlist-items">
+          <div class="empty-playlist">Здесь появятся твои любимые игрушки.<br><span>Добавь их кнопкой «+ в мой вечер».</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tech-section" id="about">
+      <div class="tech-card">
+        <div class="eyebrow">04 / ПОЧЕМУ ЭТО КОНКУРСНЫЙ ПРОЕКТ</div>
+        <h2>От декоративной ёлки — к интерактивному медиапространству.</h2>
+        <div class="tech-grid">
+          <div><span>01</span><b>Интерактивность</b><p>Игрушки — не картинка, а элементы управления контентом.</p></div>
+          <div><span>02</span><b>Персонализация</b><p>Настроение меняет набор рекомендаций и сценарий вечера.</p></div>
+          <div><span>03</span><b>Мультимедиа</b><p>Видео, аудио, книги и познавательный контент объединены в одном интерфейсе.</p></div>
+          <div><span>04</span><b>Практичность</b><p>Плейлист хранится локально, поиск и фильтры работают без регистрации.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Ёлка-медиатека · проект для номинации «МультимедиаЁлка»</span>
+      <span>HTML5 · CSS3 · JavaScript · YouTube IFrame API</span>
+    </footer>
+  </main>
+
+  <div class="modal" id="mediaModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card">
+      <button class="modal-close" data-close>×</button>
+      <div id="modalVisual" class="modal-visual"></div>
+      <div class="modal-body">
+        <div class="modal-type" id="modalType"></div>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+        <div id="player" class="player"></div>
+        <div class="evening-nav" id="eveningNav">
+          <button class="secondary-btn" id="prevEvening" type="button">← Предыдущий</button>
+          <span id="eveningStep">МОЙ ВЕЧЕР</span>
+          <button class="secondary-btn" id="nextEvening" type="button">Следующий →</button>
+        </div>
+        <div class="modal-actions">
+          <button class="primary-btn" id="modalPlaylistBtn">+ В мой вечер</button>
+          <a class="secondary-btn" id="externalLink" target="_blank" rel="noopener">Открыть источник ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

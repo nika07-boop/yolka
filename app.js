@@ -108,7 +108,7 @@ document.querySelectorAll(".filter").forEach(btn=>btn.onclick=()=>{document.quer
 
 function save(){localStorage.setItem("yolkaPlaylist",JSON.stringify(playlist));renderPlaylist();}
 function addToPlaylist(id){const x=media.find(m=>m.id===id);if(!x)return;if(!playlist.some(p=>p.id===id)){if(playlist.length>=12)return showToast("В плейлисте максимум 12 объектов");playlist.push(x);save();showToast("Добавлено в «Мой вечер» ✨");}else showToast("Уже добавлено");}
-function removeFromPlaylist(id){playlist=playlist.filter(x=>x.id!==id);save();}
+function removeFromPlaylist(id){const removedIndex=playlist.findIndex(x=>x.id===id);playlist=playlist.filter(x=>x.id!==id);if(removedIndex>=0&&removedIndex<currentEveningIndex)currentEveningIndex--;if(currentEveningIndex>=playlist.length)currentEveningIndex=playlist.length-1;save();updateEveningControls();}
 function renderPlaylist(){
   count.textContent=`${playlist.length} / 12`;
   if(!playlist.length){playlistItems.innerHTML='<div class="empty-playlist">Здесь появятся твои любимые игрушки.<br><span>Добавь их кнопкой «+ в мой вечер».</span></div>';return;}
@@ -137,6 +137,7 @@ function updateEveningControls(){
 }
 
 function openMedia(id,keepEvening=true){
+  igniteTree();
   const x=typeof id==="object"?id:media.find(m=>m.id===id);if(!x)return;currentMedia=x;
   if(keepEvening){const idx=playlist.findIndex(p=>p.id===x.id);if(idx>=0){currentEveningIndex=idx;updateEveningControls();}}
   document.getElementById("modalVisual").textContent=x.icon;
@@ -168,17 +169,23 @@ else{
   if(x.spotify){const kind=x.spotifyType||"track";const h=kind==="track"?152:352;player.innerHTML=`<iframe src="https://open.spotify.com/embed/${kind}/${x.spotify}?utm_source=generator&theme=0" width="100%" height="${h}" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:12px"></iframe>`;}
   else if(x.yt){player.innerHTML=`<iframe src="https://www.youtube.com/embed/${x.yt}?rel=0" title="${x.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;}
   else if(x.audio){player.innerHTML=`<audio controls src="${x.audio}" style="width:100%"></audio>`;}
-  document.getElementById("mediaModal").classList.add("open");document.getElementById("mediaModal").setAttribute("aria-hidden","false");
+  document.getElementById("mediaModal").classList.add("open");document.getElementById("mediaModal").setAttribute("aria-hidden","false");document.body.classList.add("modal-open");
 }
 
 document.querySelectorAll("[data-close]").forEach(x=>x.onclick=closeModal);
-function closeModal(){document.getElementById("mediaModal").classList.remove("open");document.getElementById("player").innerHTML="";}
+function closeModal(){const modal=document.getElementById("mediaModal");modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.getElementById("player").innerHTML="";document.body.classList.remove("modal-open");}
 document.getElementById("modalPlaylistBtn").onclick=()=>{if(!currentMedia)return;addToPlaylist(currentMedia.id);document.getElementById("modalPlaylistBtn").textContent="✓ В моём вечере";};
 document.getElementById("prevEvening").onclick=prevEveningItem;
 document.getElementById("nextEvening").onclick=nextEveningItem;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();if(e.key==="ArrowRight"&&!document.getElementById("mediaModal").classList.contains("open"))return;if(e.key==="ArrowRight")nextEveningItem();if(e.key==="ArrowLeft")prevEveningItem();});
 
-document.querySelectorAll(".mood").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".mood").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");activeMood=btn.dataset.mood;const picks=media.filter(x=>x.moods.includes(activeMood)).slice(0,4);const rec=document.getElementById("recommendation");rec.classList.remove("hidden");rec.innerHTML=`<div class="tag">ПОДБОРКА ДЛЯ ТЕБЯ</div><h3 style="font-family:'Cormorant Garamond';font-size:34px;margin:7px 0">Ёлка выбрала ${picks.length} варианта</h3><div class="rec-items">${picks.map(x=>`<div class="rec-item" onclick="openMedia(${x.id})"><span class="rec-icon">${x.icon}</span><span><b>${x.title}</b><small style="display:block;color:var(--muted)">${x.label}</small></span></div>`).join("")}</div>`;rec.scrollIntoView({behavior:"smooth",block:"center"});});
+const igniteBtn=document.querySelector('.hero-actions a[href="#tree"]');
+if(igniteBtn) igniteBtn.addEventListener('click',()=>{document.querySelector('.hero-tree-wrap')?.classList.add('tree-lit');showToast('Ёлка зажглась! ✨');});
+
+// Opening any ornament also turns on the tree lights.
+function igniteTree(){document.querySelector('.hero-tree-wrap')?.classList.add('tree-lit');}
+
+ document.querySelectorAll(".mood").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".mood").forEach(b=>b.classList.remove("selected"));btn.classList.add("selected");activeMood=btn.dataset.mood;const picks=media.filter(x=>x.moods.includes(activeMood)).slice(0,4);const rec=document.getElementById("recommendation");rec.classList.remove("hidden");rec.innerHTML=`<div class="tag">ПОДБОРКА ДЛЯ ТЕБЯ</div><h3 style="font-family:'Cormorant Garamond';font-size:34px;margin:7px 0">Ёлка выбрала ${picks.length} варианта</h3><div class="rec-items">${picks.map(x=>`<div class="rec-item" onclick="openMedia(${x.id})"><span class="rec-icon">${x.icon}</span><span><b>${x.title}</b><small style="display:block;color:var(--muted)">${x.label}</small></span></div>`).join("")}</div>`;rec.scrollIntoView({behavior:"smooth",block:"center"});});
 document.getElementById("surpriseBtn").onclick=()=>{const x=media[Math.floor(Math.random()*media.length)];showToast(`Сегодня ёлка советует: ${x.title}`);setTimeout(()=>openMedia(x.id),450);};
 document.getElementById("clearPlaylist").onclick=()=>{playlist=[];currentEveningIndex=-1;save();updateEveningControls();showToast("Плейлист очищен");};
 document.getElementById("playAll").onclick=()=>{if(!playlist.length){showToast("Сначала добавь несколько игрушек");return;}setEveningIndex(0);};
